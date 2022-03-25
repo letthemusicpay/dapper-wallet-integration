@@ -6,8 +6,32 @@
     }
   },
   "contracts": {
+    "NonFungibleToken": {
+      "source": "./cadence/contracts/NonFungibleToken.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "MetadataViews": {
+      "source": "./cadence/contracts/MetadataViews.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "NFTStorefront": {
+      "source": "./cadence/contracts/NFTStorefront.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
     "DapperUtilityCoin": {
       "source": "./cadence/contracts/DapperUtilityCoin.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "TokenForwarding": {
+      "source": "./cadence/contracts/TokenForwarding.cdc",
       "aliases": {
         "emulator": "f8d6e0586b0a20c7"
       }
@@ -15,7 +39,7 @@
     "RCRDSHPNFT": {
       "source": "./cadence/contracts/RCRDSHPNFT.cdc",
       "aliases": {
-        "rcrdshp-account": "e03daebed8ca0615"
+        "emulator": "e03daebed8ca0615"
       }
     }
   },
@@ -27,7 +51,19 @@
   "accounts": {
     "emulator-account": {
       "address": "f8d6e0586b0a20c7",
-      "key": "3367fc229611d395689bf3effd333f98f20d3d310b26c7351a56c5ba60a3fd7d"
+      "key": "a2c44ba71cf0629ab8f11c142a1566cd9eebb112611ca48600776a2096849ca6"
+    },
+    "buyer-account": {
+      "address": "01cf0e2f2f715450",
+      "key": "3bc524119d2571a4b5691ca695ae5061bda8f4c7302371bc5c3f7d86ecbee4d4"
+    },
+    "seller-account": {
+      "address": "179b6b1cb6755e31",
+      "key": "5edefdd0317d3a11acf9004554cfd1730e066623506325ae4016ea0eecb4bddd"
+    },
+    "dapper-account": {
+      "address": "f3fcd2c1a78f5eee",
+      "key": "c8eb48f4d7b8939486d1bc5ab1fe276136fe96215349a509431d2ec134f75b83"
     },
     "rcrdshp-account": {
       "address": "e03daebed8ca0615",
@@ -36,8 +72,16 @@
   },
   "deployments": {
     "emulator": {
-      "emulator-account": ["DapperUtilityCoin"],
-      "rcrdshp-account": ["RCRDSHPNFT"]
+      "emulator-account": [
+        "NonFungibleToken",
+        "MetadataViews",
+        "TokenForwarding",
+        "NFTStorefront",
+        "DapperUtilityCoin"
+      ],
+      "rcrdshp-account": [
+        "RCRDSHPNFT"
+      ]
     }
   }
 }

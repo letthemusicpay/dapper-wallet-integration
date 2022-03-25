@@ -1,37 +1,17 @@
 # Whitelisting transactions test
 
 ## USE CASE: Configure all the accounts with the needed contracts
-### 1. Start the emulator and deploy the base contracts
+### 1. Start the emulator
 We are going to run the emulator in persist mode so we dont need to re run all the account creation each time we start the emulator
 
 ```
-flow emulator start --persist --contracts -v
-flow project deploy --network emulator
-```
-
-and wait to see this messages in the terminal
-
-```
-% flow project deploy --network emulator
-
-Deploying 4 contracts for accounts: emulator-account
-
-NonFungibleToken -> 0xf8d6e0586b0a20c7 (339a06ed99d530bf926afc2ed921211a601d77f4d19b119fc4b084a498826a8f)
-
-MetadataViews -> 0xf8d6e0586b0a20c7 (aa990c06a9fcb84037e2af1b77a395693b24d54afdca2567cf2571b95f494f0d)
-
-TokenForwarding -> 0xf8d6e0586b0a20c7 (2c46d41c266f918011c8e933ee9a30eb3710a84601a184609905d90262cd4a52)
-
-NFTStorefront -> 0xf8d6e0586b0a20c7 (d911501e43249a58feca4cc1566f9fa39d62300be37ea694d9568e1a7194e698)
-
-DapperUtilityCoin -> 0xf8d6e0586b0a20c7 (3bb690ee77a3dbc2c0aa367505b3bb3797741eb3444f057c8d248df93a8bcd93)
-
-✨ All contracts deployed successfully
-
+flow emulator start --persist -v
 ```
 
 ### 2. Create all the needed accounts
+
 Using the following key pairs: 
+
 ```
 {"private":"3bc524119d2571a4b5691ca695ae5061bda8f4c7302371bc5c3f7d86ecbee4d4","public":"f691abdb945ac166fbe5f1a06e3ebe6eaa77061099a796175efcdf661b6c76491ba116420fb51ae3f52c973474f96f25f88c57812ed95f4df1add3cf6fd89f1c"}
 {"private":"5edefdd0317d3a11acf9004554cfd1730e066623506325ae4016ea0eecb4bddd","public":"fbbbbec5eeff5b669f08fd7be22d51dd855afc500cccff6a0274b1075d2bb2c6f53a2ef3d512fc7c339612f23fc45124481dc2072e7e334b5daea4b8b18f7e13"}
@@ -40,11 +20,13 @@ Using the following key pairs:
 ```
 
 Use the following commands in order to generate a buyer account, in which after the --key input you insert the public key of the pair so you can run this command:
+
 ```
 flow accounts create --key f691abdb945ac166fbe5f1a06e3ebe6eaa77061099a796175efcdf661b6c76491ba116420fb51ae3f52c973474f96f25f88c57812ed95f4df1add3cf6fd89f1c --signer emulator-account
 ```
 
 in the terminal you can check on the output the new created account address, so now using the private key and the address add this to the flow.json file under the "accounts" segment: 
+
 ```
 "buyer-account": {
     "address": "01cf0e2f2f715450",
@@ -53,6 +35,7 @@ in the terminal you can check on the output the new created account address, so 
 ```
 
 then repeat the same for seller-account, dapper-account and rcrdshp-account
+
 ```
 flow accounts create --key fbbbbec5eeff5b669f08fd7be22d51dd855afc500cccff6a0274b1075d2bb2c6f53a2ef3d512fc7c339612f23fc45124481dc2072e7e334b5daea4b8b18f7e13 --signer emulator-account
 flow accounts create --key 4b6c6f27c1e0031a0abe090ee05476d1caaa82e87ec49524f4ca392db7e6014bb0f79442c8705dd5fe97965b18778dc286bec540f5a5932469b1d423f30c4fb1 --signer emulator-account
@@ -86,42 +69,37 @@ and add under accounts the following outputs:
 },
 ```
 
-### 3. We deploy the RCRDHSP contract into the rcrdshp account
-In order to deploy the contract to the RCRDSHP account we need to update the flow.json file and add the following piece of code under CONTRACTS:
+## 3. We deploy all the needed contracts into the specific accounts
+
+In order to deploy all the contracts just run the following command:
 
 ```
-  "RCRDSHPNFT": {
-    "source": "./cadence/contracts/RCRDSHPNFT.cdc",
-    "aliases": {
-      "emulator": "e03daebed8ca0615"
-    }
-  }
+flow project deploy --network emulator
 ```
 
-then we need to add this to the end of the file so it looks like this: 
+and wait to see this messages in the terminal
 
 ```
-"deployments": {
-    "emulator": {
-      "emulator-account": [
-        "NonFungibleToken",
-        "MetadataViews",
-        "NFTStorefront",
-        "DapperUtilityCoin"
-      ],
-      "rcrdshp-account": [
-        "RCRDSHPNFT"
-      ]
-    }
-}
-```
+Deploying 6 contracts for accounts: emulator-account,rcrdshp-account
 
-and finally we update the project in order for the contract to be deployed to the account, dont forget to add the --update flag so it doesnt redeploy the contracts that are already there
-```
-flow project deploy --network emulator --update
+NonFungibleToken -> 0xf8d6e0586b0a20c7 (0540f1b6ba0e74ee20ba68abcf88ee02f57fea63aa126c7fa18d73c9ed0b56fd)
+
+MetadataViews -> 0xf8d6e0586b0a20c7 (de0c33386dd4187c338fcc7cc8724b591273afa5b6c20e14c68e9e48efc2b9e6)
+
+TokenForwarding -> 0xf8d6e0586b0a20c7 (f2d69ba6f5c30e2edcfc57144e6cba846599769c9df38ba5ffcae59984453975)
+
+NFTStorefront -> 0xf8d6e0586b0a20c7 (b615c9ccbf75a30e7d57ed9796f532182a54652fe9804ebbe09eda8a2d81494d)
+
+DapperUtilityCoin -> 0xf8d6e0586b0a20c7 (6dd53c7466728f3534bd50d757ef83fe7a7e80ac4737034a148e40a49057a2a8)
+
+RCRDSHPNFT -> 0xe03daebed8ca0615 (e16998c6fef6d5cc7d9d0e5d4f41c9c735612f038f7c541a13a0fb7b3de52384)
+
+
+✨ All contracts deployed successfully
 ```
 
 ### 4. Setup the accounts for RCRDSHPNFT
+
 In order to set up all the accounts we need to run the transaction called initialize-account-emulator.cdc only on the buyer and seller account.
 The rcrdshp account houls the contract to is already configured and the dapper account only pays for the nfts and it does not hold them.
 
@@ -132,6 +110,7 @@ flow transactions send ./initialize-account-emulator.cdc --signer buyer-account 
 the terminal outputs for each of these commands contains no Events. 
 
 ### 5. Configure the needed account in order to receive DUC
+
 The dapper account needs to hold and pay using DUC and the RCRDSHP account needs to receive the DUC paid by the dapper account so both accounts needs to be configured.
 Also the seller needs to have DUC capability.
 
@@ -144,6 +123,7 @@ flow transactions send ./cadence/transactions/setupDUCAccount.cdc --signer selle
 The terminal output doesnt show any events in this case
 
 ### 6. Configure seller-account and rcrdshp-account with a DUC forwarder
+
 Because DUC is just a way to log into an event the movement of money and it does not have a per se utility, all the accounts that need to receive DUC 
 also need to have a DUC forwarder in order to return the DUC back to the dapper account.  
 
@@ -154,6 +134,7 @@ flow transactions send ./cadence/transactions/createDUCForwarder.cdc --signer se
 ```
 
 ### 7. Mint some  DUC
+
 Now we need to mint some DUC in order for the dapper account to be able to pay for any NFT
 
 ```
@@ -164,6 +145,7 @@ flow transactions send ./cadence/transactions/transferDUCToWallet.cdc --signer e
 ## USE CASE: Create nft, put it for sale and purchase from listing
 
 ### 1. Mint some NFTs
+
 We need at least one NFT before putting for sale and the dapper account needs to have some DUC minted in order to pay for it on behalf of the buyer.
 In order to mint an NFT we need to run this command and sign it with rcrdshp-account
 
@@ -180,9 +162,11 @@ Events:
                 - id (UInt64): 0 
                 - to (Address?): 0x179b6b1cb6755e31 
 ```
+
 Which means that the nft id 0 was minted and deposited to the address 0x179b6b1cb6755e31, which corresponds to the seller-account.
 
 ### 2. List the NFT for sale using the storefront
+
 The NFT created in the step before corresponds to a Card, which means we need to use the "create-listing-rcrdshp-card-emulator.cdc" transaction for this purpose. 
 
 ```
@@ -214,6 +198,7 @@ This means that the storefront was successfully configured on the seller account
 the nft with the id 0 was successfully put for sale (listingResourceID (UInt64): 49) 
 
 ### 3. Buyer buys the nft from the storefront
+
 In order to buy from the storefront we need to use the purchase-nft-rcrdshp-emulator.cdc transaction.
 Also because the nft is paid in DUC, a second signature is needed in order to authorize this transaction, so both dapper-account and the buyer-account are included in
 the signature chain.
