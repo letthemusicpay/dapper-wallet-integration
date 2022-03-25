@@ -1,0 +1,43 @@
+{
+  "emulators": {
+    "default": {
+      "port": 3569,
+      "serviceAccount": "emulator-account"
+    }
+  },
+  "contracts": {
+    "DapperUtilityCoin": {
+      "source": "./cadence/contracts/DapperUtilityCoin.cdc",
+      "aliases": {
+        "emulator": "f8d6e0586b0a20c7"
+      }
+    },
+    "RCRDSHPNFT": {
+      "source": "./cadence/contracts/RCRDSHPNFT.cdc",
+      "aliases": {
+        "rcrdshp-account": "e03daebed8ca0615"
+      }
+    }
+  },
+  "networks": {
+    "emulator": "127.0.0.1:3569",
+    "mainnet": "access.mainnet.nodes.onflow.org:9000",
+    "testnet": "access.devnet.nodes.onflow.org:9000"
+  },
+  "accounts": {
+    "emulator-account": {
+      "address": "f8d6e0586b0a20c7",
+      "key": "3367fc229611d395689bf3effd333f98f20d3d310b26c7351a56c5ba60a3fd7d"
+    },
+    "rcrdshp-account": {
+      "address": "e03daebed8ca0615",
+      "key": "5d5f63afeb89848fe9241e619f874447201f1e46686cd2f29c0fc3ac0cc59a94"
+    }
+  },
+  "deployments": {
+    "emulator": {
+      "emulator-account": ["DapperUtilityCoin"],
+      "rcrdshp-account": ["RCRDSHPNFT"]
+    }
+  }
+}
