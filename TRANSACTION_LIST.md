@@ -2,7 +2,7 @@
 
 If it says YES means is whitelisted in the corresponding network
 
-** TESTNET **
+## **TESTNET**
 | Transaction file name                      | whitelisted? | 
 |--------------------------------------------|---------|
 | initialize-account-testnet.cdc             | YES     |
@@ -15,7 +15,7 @@ If it says YES means is whitelisted in the corresponding network
 
 
 
-**  MAINNET **
+## **MAINNET**
 | whitelisted? | Transaction file name                 | Title                           | Description                                                                                             |
 |--------------|---------------------------------------|---------------------------------|---------------------------------------------------------------------------------------------------------|
 |NOT YET       | initialize-account-mainnet.cdc        | Initialize account              | Allow your dapper wallet to hold RCRDSHP nfts                                                           |
