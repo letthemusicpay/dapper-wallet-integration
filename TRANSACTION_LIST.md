@@ -18,6 +18,6 @@ If it says YES means is whitelisted in the corresponding network
 ## **MAINNET**
 | whitelisted? | Transaction file name                 | Title                           | Description                                                                                             |
 |--------------|---------------------------------------|---------------------------------|---------------------------------------------------------------------------------------------------------|
-|NOT YET       | initialize-account-mainnet.cdc        | Initialize account              | Allow your dapper wallet to hold RCRDSHP nfts                                                           |
-|NOT YET       | purchase-nft-rcrdshp-mainnet.cdc      | Purchase                        | Purchase a RCRDSHP collectible and deposits into your dapper wallet                                     |
-|NOT YET       | transfer-dapper-custodial-mainner.cdc | Transfer to RCRDSHP collection  | Transfer your nft from your dapper wallet to your rcrdshp collection, where it can be used for gameplay |
+|YES    | initialize-account-mainnet.cdc        | Initialize account              | Allow your dapper wallet to hold RCRDSHP nfts                                                           |
+|YES       | purchase-nft-rcrdshp-mainnet.cdc      | Purchase                        | Purchase a RCRDSHP collectible and deposits into your dapper wallet                                     |
+|YES       | transfer-dapper-custodial-mainner.cdc | Transfer to RCRDSHP collection  | Transfer your nft from your dapper wallet to your rcrdshp collection, where it can be used for gameplay |
