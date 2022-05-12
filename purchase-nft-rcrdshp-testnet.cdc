@@ -2,6 +2,7 @@ import FungibleToken from 0x9a0766d93b6608b7
 import NonFungibleToken from 0x631e88ae7f1d7c20
 import DapperUtilityCoin from 0x82ec283f88a62e65
 import NFTStorefront from 0x94b06cfca1d8a476
+import MetadataViews from 0x631e88ae7f1d7c20
 import RCRDSHPNFT from 0x7cde1ed9dfd13561
 
 // This transaction purchases an NFT on a peer-to-peer marketplace (i.e. **not** directly from a dapp). This transaction
@@ -20,10 +21,18 @@ transaction(listingResourceID: UInt64, storefrontAddress: Address, expectedPrice
         if buyer.borrow<&RCRDSHPNFT.Collection{NonFungibleToken.Receiver}>(from: RCRDSHPNFT.collectionStoragePath) == nil {
             let collection <- RCRDSHPNFT.createEmptyCollection() as! @RCRDSHPNFT.Collection
             buyer.save(<-collection, to: RCRDSHPNFT.collectionStoragePath)
-            buyer.link<&RCRDSHPNFT.Collection{NonFungibleToken.CollectionPublic, RCRDSHPNFT.RCRDSHPNFTCollectionPublic}>(
+            buyer.link<&RCRDSHPNFT.Collection{NonFungibleToken.CollectionPublic, RCRDSHPNFT.RCRDSHPNFTCollectionPublic, MetadataViews.ResolverCollection}>(
                RCRDSHPNFT.collectionPublicPath,
                target: RCRDSHPNFT.collectionStoragePath,
            )
+        } else {
+          buyer.borrow<&RCRDSHPNFT.Collection{MetadataViews.ResolverCollection}>(from: RCRDSHPNFT.collectionStoragePath) == nil {
+            buyer.unlink(RCRDSHPNFT.collectionPublicPath)
+            buyer.link<&RCRDSHPNFT.Collection{NonFungibleToken.CollectionPublic, RCRDSHPNFT.RCRDSHPNFTCollectionPublic, MetadataViews.ResolverCollection}>(
+               RCRDSHPNFT.collectionPublicPath,
+               target: RCRDSHPNFT.collectionStoragePath
+            )
+          }
         }
 
         // Get the storefront reference from the seller
