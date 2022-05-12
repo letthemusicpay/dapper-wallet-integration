@@ -25,14 +25,6 @@ transaction(listingResourceID: UInt64, storefrontAddress: Address, expectedPrice
                RCRDSHPNFT.collectionPublicPath,
                target: RCRDSHPNFT.collectionStoragePath,
            )
-        } else {
-          buyer.borrow<&RCRDSHPNFT.Collection{MetadataViews.ResolverCollection}>(from: RCRDSHPNFT.collectionStoragePath) == nil {
-            buyer.unlink(RCRDSHPNFT.collectionPublicPath)
-            buyer.link<&RCRDSHPNFT.Collection{NonFungibleToken.CollectionPublic, RCRDSHPNFT.RCRDSHPNFTCollectionPublic, MetadataViews.ResolverCollection}>(
-               RCRDSHPNFT.collectionPublicPath,
-               target: RCRDSHPNFT.collectionStoragePath
-            )
-          }
         }
 
         // Get the storefront reference from the seller

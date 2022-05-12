@@ -1,4 +1,5 @@
 import NonFungibleToken from 0x1d7e57aa55817448
+import MetadataViews from 0x1d7e57aa55817448
 import RCRDSHPNFT from 0x6c3ff40b90b928ab
 
 // This transaction initializes an account with a collection that allows it to hold NFTs from a specific contract. It will
@@ -8,7 +9,7 @@ transaction {
        if collector.borrow<&RCRDSHPNFT.Collection{NonFungibleToken.Receiver}>(from: RCRDSHPNFT.collectionStoragePath) == nil {
            let collection <- RCRDSHPNFT.createEmptyCollection() as! @RCRDSHPNFT.Collection
            collector.save(<-collection, to: RCRDSHPNFT.collectionStoragePath)
-           collector.link<&RCRDSHPNFT.Collection{NonFungibleToken.CollectionPublic, RCRDSHPNFT.RCRDSHPNFTCollectionPublic}>(
+           collector.link<&RCRDSHPNFT.Collection{NonFungibleToken.CollectionPublic, RCRDSHPNFT.RCRDSHPNFTCollectionPublic, MetadataViews.ResolverCollection}>(
                RCRDSHPNFT.collectionPublicPath,
                target: RCRDSHPNFT.collectionStoragePath,
            )
